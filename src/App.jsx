@@ -11,11 +11,20 @@ import Error404 from "./Error404.jsx";
  * account will be able to upload and manage their own activities.
  */
 export default function App() {
-  const { page } = usePage();
+  <Routes>
+    <Route element={<Layout />}>
+      <Route index element={<Home />} />
+      <Route path="/colors" element={<Colors />} />
+      <Route path="/colors/:color" element={<Wallpaper />} />
+      <Route path="/*" element={<Error404 />} />
+    </Route>
+  </Routes>;
 
-  if (page === "register") return <Register />;
-  if (page === "login") return <Login />;
-  if (page === "activities") return <ActivitiesPage />;
+  // const { page } = usePage();
+
+  // if (page === "register") return <Register />;
+  // if (page === "login") return <Login />;
+  // if (page === "activities") return <ActivitiesPage />;
 
   return <Error404 />;
 }
