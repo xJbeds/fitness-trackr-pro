@@ -12,10 +12,10 @@ import Error404 from "./Error404.jsx";
  */
 export default function App() {
   <Routes>
-    <Route element={<Layout />}>
-      <Route index element={<Home />} />
-      <Route path="/colors" element={<Colors />} />
-      <Route path="/colors/:color" element={<Wallpaper />} />
+    <Route element={<Home />}>
+      <Route index element={<Login />} />
+      <Route path="./Layout" element={<Layout />} />
+      <Route path="./Navbar" element={<Navbar />} />
       <Route path="/*" element={<Error404 />} />
     </Route>
   </Routes>;
