@@ -16,6 +16,8 @@ export default function Navbar() {
           <>
             <a onClick={() => setPage("register")}>Register</a>
             <a onClick={() => setPage("login")}>Login</a>
+
+            <button>Delete</button>
           </>
         )}
       </nav>
