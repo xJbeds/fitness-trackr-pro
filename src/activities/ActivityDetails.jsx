@@ -1,5 +1,9 @@
-import from react 
+import {useParams} from react-router 
 
+
+export default function ActivityDetials() {
+  const 
+}
 
 // 6. Build a new component to use as the page for details about a single activity.
 // Each activity in <ActivityList> should link to its own page.
