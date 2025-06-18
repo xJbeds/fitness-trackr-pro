@@ -1,12 +1,46 @@
-import {useParams} from react-router 
+import { useNavigate, useParams } from "react-router";
+import { useAuth } from "../auth/AuthContext";
+import useQuery from "../api/useQuery";
+import useMutation from "../api/useMutation";
 
+export default function ActivityDetails() {
+  const { token } = useAuth();
+  const { id } = useParams();
+  const {
+    data: activity,
+    loading,
+    error,
+  } = useQuery(`/activities/${id}`, "activity");
 
-export default function ActivityDetials() {
-  const 
+  if (loading) return <p>Loading...</p>;
+  if (error || !activity) return <p>Sorry! {error}</p>;
+
+  return (
+    <>
+      <h1>{activity.name}</h1>
+      <p>by {activity.creatorName}</p>
+      <p>{activity.description}</p>
+      {token && <DeleteButton id={activity.id} />}
+    </>
+  );
 }
 
-// 6. Build a new component to use as the page for details about a single activity.
-// Each activity in <ActivityList> should link to its own page.
-// On that page, the activity's name, description, and creator name should be displayed.
-// That component should use useQuery to grab information about the single activity from the API.
-// Hint: define the activity ID as a dynamic segment so the component can grab the ID with useParams!
+function DeleteButton({ id }) {
+  const navigate = useNavigate();
+  const {
+    mutate: deleteActivity,
+    loading,
+    error,
+  } = useMutation("DELETE", "/activities/" + id, ["activities", "activity"]);
+
+  const onDeleteActivity = async () => {
+    const success = await deleteActivity();
+    if (success) navigate("/activities");
+  };
+
+  return (
+    <button onClick={onDeleteActivity}>
+      {loading ? "Deleting" : (error ?? "Delete")}
+    </button>
+  );
+}
